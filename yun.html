@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="专业数字服务、服务器运维与网络解决方案" />
+  <title>云端工坊 · 数字服务解决方案</title>
+
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0b1a2f;
+      --card: rgba(16, 36, 62, 0.72);
+      --card-hover: rgba(20, 49, 83, 0.92);
+      --primary: #31c5ff;
+      --primary-dark: #0c91d1;
+      --secondary: #7c5cff;
+      --text: #f4f8ff;
+      --muted: #a8b7cb;
+      --border: rgba(139, 177, 220, 0.18);
+      --success: #54e0a0;
+      --shadow: 0 18px 55px rgba(0, 0, 0, 0.28);
+      --radius: 18px;
+      --max-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      overflow-x: hidden;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(49, 197, 255, 0.16), transparent 28%),
+        radial-gradient(circle at 90% 15%, rgba(124, 92, 255, 0.18), transparent 30%),
+        linear-gradient(145deg, #06101d 0%, #07182b 55%, #081120 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
+        "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 96px 0;
+    }
+
+    .section-title {
+      max-width: 720px;
+      margin: 0 auto 52px;
+      text-align: center;
+    }
+
+    .section-title span {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .section-title h2 {
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+    }
+
+    .section-title p {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    /* 顶部导航 */
+    .navbar {
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      border-bottom: 1px solid transparent;
+      transition: 0.25s ease;
+    }
+
+    .navbar.scrolled {
+      border-bottom-color: var(--border);
+      background: rgba(7, 17, 31, 0.82);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 74px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .logo-mark {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid rgba(94, 216, 255, 0.5);
+      border-radius: 11px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      box-shadow: 0 8px 25px rgba(49, 197, 255, 0.22);
+      font-size: 18px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-button,
+    .btn-primary,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 19px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .nav-button,
+    .btn-primary {
+      color: #06111e;
+      background: linear-gradient(135deg, #58d6ff, #3baaff);
+      box-shadow: 0 10px 24px rgba(49, 197, 255, 0.2);
+    }
+
+    .nav-button:hover,
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(49, 197, 255, 0.32);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      border-color: var(--border);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      border-color: rgba(83, 207, 255, 0.55);
+      background: rgba(49, 197, 255, 0.1);
+    }
+
+    .menu-button {
+      display: none;
+      padding: 6px;
+      border: 0;
+      color: var(--text);
+      background: transparent;
+      cursor: pointer;
+      font-size: 26px;
+    }
+
+    /* 首屏 */
+    .hero {
+      position: relative;
+      display: flex;
+      min-height: 780px;
+      align-items: center;
+      padding: 150px 0 80px;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 13px;
+      border: 1px solid rgba(49, 197, 255, 0.28);
+      border-radius: 999px;
+      color: #c7efff;
+      background: rgba(49, 197, 255, 0.09);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .hero-badge i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 5px rgba(84, 224, 160, 0.12);
+    }
+
+    .hero h1 {
+      max-width: 720px;
+      margin-top: 20px;
+      font-size: clamp(42px, 6vw, 70px);
+      line-height: 1.08;
+      letter-spacing: -0.06em;
+    }
+
+    .gradient-text {
+      color: transparent;
+      background: linear-gradient(90deg, #69dcff 0%, #b496ff 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .hero-description {
+      max-width: 610px;
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 18px);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 40px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-meta-item strong {
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .status-card {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background:
+        linear-gradient(145deg, rgba(24, 57, 95, 0.85), rgba(9, 24, 43, 0.9));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .status-card::before {
+      position: absolute;
+      top: -90px;
+      right: -80px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: rgba(49, 197, 255, 0.14);
+      content: "";
+      filter: blur(12px);
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 17px 20px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.13);
+    }
+
+    .dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dots span:nth-child(1) {
+      background: #ff6b6b;
+    }
+
+    .dots span:nth-child(2) {
+      background: #ffd166;
+    }
+
+    .dots span:nth-child(3) {
+      background: #54e0a0;
+    }
+
+    .terminal-title {
+      color: #9bb3ce;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+    }
+
+    .terminal-content {
+      padding: 24px 22px 26px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+    }
+
+    .terminal-line {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .terminal-prompt {
+      color: var(--success);
+    }
+
+    .terminal-command {
+      color: #dceeff;
+    }
+
+    .terminal-output {
+      margin: 7px 0 18px 20px;
+      color: #91a9c5;
+      line-height: 1.8;
+    }
+
+    .server-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .server-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid rgba(148, 190, 233, 0.12);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .server-item-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #cfe5fc;
+    }
+
+    .online-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 10px var(--success);
+    }
+
+    .server-item small {
+      color: var(--success);
+      font-size: 11px;
+    }
+
+    /* 数据统计 */
+    .stats {
+      position: relative;
+      z-index: 2;
+      margin-top: -30px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(10, 26, 46, 0.8);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+
+    .stat-item {
+      padding: 26px;
+      text-align: center;
+    }
+
+    .stat-item + .stat-item {
+      border-left: 1px solid var(--border);
+    }
+
+    .stat-number {
+      display: block;
+      color: #fff;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .stat-label {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* 服务 */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .service-card {
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card);
+      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(73, 204, 255, 0.5);
+      background: var(--card-hover);
+    }
+
+    .service-icon {
+      display: grid;
+      width: 52px;
+      height: 52px;
+      place-items: center;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      background: linear-gradient(145deg, rgba(49, 197, 255, 0.25), rgba(124, 92, 255, 0.22));
+      color: #d9f6ff;
+      font-size: 25px;
+    }
+
+    .service-card h3 {
+      font-size: 20px;
+    }
+
+    .service-card p {
+      margin-top: 11px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .service-link {
+      display: inline-flex;
+      gap: 7px;
+      margin-top: 20px;
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* 方案 */
+    .workflow {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(3, 12, 23, 0.35);
+    }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .step-card {
+      position: relative;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(10, 28, 50, 0.58);
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 20px;
+      border-radius: 50%;
+      color: #07111f;
+      background: var(--primary);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .step-card h3 {
+      font-size: 19px;
+    }
+
+    .step-card p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* 联系区域 */
+    .contact-box {
+      position: relative;
+      overflow: hidden;
+      padding: 50px;
+      border: 1px solid rgba(83, 210, 255, 0.35);
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 90% 15%, rgba(124, 92, 255, 0.28), transparent 30%),
+        radial-gradient(circle at 10% 100%, rgba(49, 197, 255, 0.2), transparent 32%),
+        linear-gradient(130deg, #102b4a, #0b1a31);
+      text-align: center;
+    }
+
+    .contact-box h2 {
+      font-size: clamp(30px, 4vw, 45px);
+      letter-spacing: -0.04em;
+    }
+
+    .contact-box p {
+      max-width: 620px;
+      margin: 15px auto 28px;
+      color: #b9cde4;
+    }
+
+    /* 页脚 */
+    footer {
+      padding: 30px 0;
+      border-top: 1px solid var(--border);
+      color: #8093aa;
+      font-size: 13px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    /* 移动端 */
+    @media (max-width: 850px) {
+      .nav-links {
+        position: absolute;
+        top: 74px;
+        left: 20px;
+        right: 20px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: rgba(8, 23, 41, 0.98);
+        box-shadow: var(--shadow);
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 12px;
+      }
+
+      .nav-links .nav-button {
+        margin-top: 8px;
+      }
+
+      .menu-button {
+        display: block;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 132px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 42px;
+      }
+
+      .hero-content {
+        text-align: center;
+      }
+
+      .hero-description {
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .hero-actions,
+      .hero-meta {
+        justify-content: center;
+      }
+
+      .services-grid,
+      .workflow-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 28px, var(--max-width));
+      }
+
+      .section {
+        padding: 70px 0;
+      }
+
+      .stats {
+        margin-top: 0;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat-item:nth-child(3) {
+        border-left: 0;
+        border-top: 1px solid var(--border);
+      }
+
+      .stat-item:nth-child(4) {
+        border-top: 1px solid var(--border);
+      }
+
+      .stat-item {
+        padding: 20px 10px;
+      }
+
+      .contact-box {
+        padding: 38px 20px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 顶部导航 -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a class="logo" href="#home" aria-label="云端工坊首页">
+        <span class="logo-mark">⌘</span>
+        <span>云端工坊</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#services">服务内容</a>
+        <a href="#workflow">合作流程</a>
+        <a href="#contact">联系我们</a>
+        <a class="nav-button" href="#contact">获取方案 →</a>
+      </nav>
+
+      <button class="menu-button" id="menuButton" aria-label="打开导航菜单">
+        ☰
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- 首屏 -->
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <i></i>
+            正在提供稳定的数字化服务
+          </div>
+
+          <h1>
+            让技术成为<br />
+            业务增长的<span class="gradient-text">可靠底座</span>
+          </h1>
+
+          <p class="hero-description">
+            为个人、团队和小型企业提供服务器部署、网络优化、网站建设、
+            云端工具与数字通信解决方案。清晰、高效、可持续维护。
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn-primary" href="#contact">立即咨询 →</a>
+            <a class="btn-secondary" href="#services">查看服务</a>
+          </div>
+
+          <div class="hero-meta">
+            <div class="hero-meta-item">
+              <strong>24/7</strong>
+              <span>稳定运行监控</span>
+            </div>
+            <div class="hero-meta-item">
+              <strong>Docker</strong>
+              <span>标准化部署方案</span>
+            </div>
+            <div class="hero-meta-item">
+              <strong>SSL</strong>
+              <span>安全访问配置</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧终端装饰卡片 -->
+        <div class="status-card" aria-label="服务运行状态示例">
+          <div class="terminal-header">
+            <div class="dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="terminal-title">service-status.sh</div>
+          </div>
+
+          <div class="terminal-content">
+            <div class="terminal-line">
+              <span class="terminal-prompt">➜</span>
+              <span class="terminal-command">systemctl status cloud-service</span>
+            </div>
+
+            <div class="terminal-output">
+              ● cloud-service.service - Digital Service Node<br />
+              Loaded: loaded (enabled)<br />
+              Active: <span style="color:#54e0a0">active (running)</span><br />
+              Uptime: 99.99%
+            </div>
+
+            <div class="server-list">
+              <div class="server-item">
+                <div class="server-item-left">
+                  <span class="online-dot"></span>
+                  <span>Web Application</span>
+                </div>
+                <small>ONLINE</small>
+              </div>
+
+              <div class="server-item">
+                <div class="server-item-left">
+                  <span class="online-dot"></span>
+                  <span>Database Cluster</span>
+                </div>
+                <small>ONLINE</small>
+              </div>
+
+              <div class="server-item">
+                <div class="server-item-left">
+                  <span class="online-dot"></span>
+                  <span>Network Gateway</span>
+                </div>
+                <small>ONLINE</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 数据统计 -->
+    <section class="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-number">99.99%</span>
+            <span class="stat-label">服务可用性目标</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">24/7</span>
+            <span class="stat-label">远程技术支持</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">Docker</span>
+            <span class="stat-label">容器化交付</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">HTTPS</span>
+            <span class="stat-label">安全访问保障</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 服务内容 -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-title">
+          <span>What We Do</span>
+          <h2>从部署到维护，一套完整的技术支持</h2>
+          <p>
+            根据你的业务需求选择合适的方案，避免复杂、难维护和不必要的成本。
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <div class="service-icon">☁</div>
+            <h3>服务器与容器部署</h3>
+            <p>
+              提供 Linux、Docker、Nginx、数据库与常见自托管应用的部署、迁移、备份和日常维护方案。
+            </p>
+            <a class="service-link" href="#contact">了解方案 →</a>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">◉</div>
+            <h3>网络与远程访问</h3>
+            <p>
+              优化家庭网络、软路由、异地访问、内网穿透、VPN 与安全访问链路，让设备随时可用。
+            </p>
+            <a class="service-link" href="#contact">了解方案 →</a>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">⌘</div>
+            <h3>网站与业务系统</h3>
+            <p>
+              构建展示官网、管理后台、数据导入工具、订阅服务和轻量化业务页面，支持后续扩展。
+            </p>
+            <a class="service-link" href="#contact">了解方案 →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 合作流程 -->
+    <section class="section workflow" id="workflow">
+      <div class="container">
+        <div class="section-title">
+          <span>Workflow</span>
+          <h2>简单清晰的合作流程</h2>
+          <p>
+            从需求梳理到上线交付，每个环节都保持透明，方便你掌握项目进度和后续维护方式。
+          </p>
+        </div>
+
+        <div class="workflow-grid">
+          <article class="step-card">
+            <span class="step-number">01</span>
+            <h3>说明需求</h3>
+            <p>
+              告诉我你的目标、现有设备或服务器环境、预算与期望上线时间，先确认可行性。
+            </p>
+          </article>
+
+          <article class="step-card">
+            <span class="step-number">02</span>
+            <h3>制定方案</h3>
+            <p>
+              输出部署架构、功能清单、所需资源及实施步骤，避免后续反复修改和额外成本。
+            </p>
+          </article>
+
+          <article class="step-card">
+            <span class="step-number">03</span>
+            <h3>部署与交付</h3>
+            <p>
+              完成上线、测试、基础安全配置和操作说明，并保留清晰的维护与备份方案。
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 联系区域 -->
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="contact-box">
+          <h2>准备好开始你的项目了吗？</h2>
+          <p>
+            无论是部署一台服务器、搭建个人网站、优化网络环境，还是开发一个小型工具，
+            都可以先聊聊你的实际需求。
+          </p>
+          <a
+            class="btn-primary"
+            href="mailto:hello@example.com?subject=我想咨询技术服务"
+          >
+            发送咨询邮件 →
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer>
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> 云端工坊 · All Rights Reserved.</div>
+      <div class="footer-links">
+        <a href="#home">首页</a>
+        <a href="#services">服务</a>
+        <a href="#workflow">流程</a>
+        <a href="#contact">联系</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById("navbar");
+    const menuButton = document.getElementById("menuButton");
+    const navLinks = document.getElementById("navLinks");
+    const navItems = navLinks.querySelectorAll("a");
+
+    function updateNavbar() {
+      navbar.classList.toggle("scrolled", window.scrollY > 20);
+    }
+
+    window.addEventListener("scroll", updateNavbar);
+    updateNavbar();
+
+    menuButton.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+      menuButton.textContent = navLinks.classList.contains("show") ? "×" : "☰";
+    });
+
+    navItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        navLinks.classList.remove("show");
+        menuButton.textContent = "☰";
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
